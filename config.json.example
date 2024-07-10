@@ -1,0 +1,17 @@
+{
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET",
+    "user_ids": [
+        "USER_ID_1",
+        "USER_ID_2",
+        "USER_ID_3"
+    ],
+    "open_conversation_id": "YOUR_OPEN_CONVERSATION_ID",
+    "AI":{
+        "SparkAi":{
+            "app_id": "xxxxxxxxxxxxxxxxxxxxx",
+            "api_key": "xxxxxxxxxxxxxxxxxxxxx",
+            "api_secret": "xxxxxxxxxxxxxxxxxxxxx"
+        }
+    }
+}
