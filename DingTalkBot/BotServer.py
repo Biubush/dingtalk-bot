@@ -7,7 +7,7 @@ from .func import (
     context_deleter,
     add_public_context,
     read_public_context,
-    delete_public_context
+    delete_public_context,
 )
 
 mygpt = GPT4Free()
@@ -110,14 +110,16 @@ class CalcBotHandler(dingtalk_stream.ChatbotHandler):
                     content="**对话长度已满，将舍弃最旧对话**",
                     openConversationId=openConversationId,
                 )
+            if "/public" in expression:
+                # 获取public字符串后面的内容，添加到公共对话记录
+                public_context = expression.split("/public")[1].strip()
+                old_expression = expression
+                expression = public_context
             reply = mygpt.ask(expression, context)
             self.GroupSender.send_markdown(
                 title="AI回复", content=reply, openConversationId=openConversationId
             )
-            if "/public" in expression:
-                # 获取public字符串后面的内容，添加到公共对话记录
-                public_context = expression.split("/public")[1].strip()
-                expression = public_context
+            if "/public" in old_expression:
                 con_list = [expression, reply]
                 add_public_context(con_list)
                 self.GroupSender.send_markdown(
@@ -164,6 +166,7 @@ class CalcBotHandler(dingtalk_stream.ChatbotHandler):
             if "/public" in expression:
                 # 获取public字符串后面的内容，添加到公共对话记录
                 public_context = expression.split("/public")[1].strip()
+                old_expression = expression
                 expression = public_context
 
             reply = mygpt.ask(expression, context)
@@ -171,7 +174,7 @@ class CalcBotHandler(dingtalk_stream.ChatbotHandler):
                 title="AI回复", content=reply, user_ids=[sender_id]
             )
 
-            if "/public" in expression:
+            if "/public" in old_expression:
                 # 获取public字符串后面的内容，添加到公共对话记录
                 con_list = [expression, reply]
                 add_public_context(con_list)

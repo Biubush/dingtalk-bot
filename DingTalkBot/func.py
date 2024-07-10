@@ -60,7 +60,7 @@ def add_public_context(context: list):
             record = json.load(f)
     except:
         record = []
-    record.extend(context)
+    record.append(context)
     if len(record) > 50:
         record = record[-50:]
     with open(file_path, "w") as f:

@@ -21,6 +21,7 @@ class GPT4Free:
         """
         client = Client(provider=Provider.Blackbox)
         messages = []
+        messages.append({"role": "system", "content": "你是一个中文问答助手，无特殊情况不要用英语回复"})
         for thismsg in context:
             messages.append({"role": "user", "content": thismsg[0]})
             messages.append({"role": "assistant", "content": thismsg[1]})
